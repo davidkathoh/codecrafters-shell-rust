@@ -18,7 +18,7 @@ fn main() {
             break;
         }else if inputs.first().unwrap() == &"echo"{
             inputs.remove(0);
-            println!("{}",inputs.join(" "));   
+            println!("{}",inputs.join(" ").trim());   
         }else{
         println!("{}: command not found",input.trim()); 
         }
