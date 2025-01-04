@@ -13,13 +13,26 @@ fn main() {
         let mut input = String::new();
         stdin.read_line(&mut input).unwrap();
 
-        let mut inputs:Vec<&str> = input.split(' ').collect();
+        let mut inputs:Vec<&str> = input.split(' ')
+                .map(|s|s.trim_end())
+                .collect();
         if input.trim() == "exit 0" {
             break;
         }else if inputs.first().unwrap() == &"echo"{
             inputs.remove(0);
             println!("{}",inputs.join(" ").trim());   
-        }else{
+        }else if inputs.first().unwrap() == &"type" {
+            inputs.remove(0);
+            if inputs.first().unwrap() == &"echo" {
+                println!("{} is a shell builtin", inputs.first().unwrap().trim()); 
+            }else if inputs.first().unwrap() == &"exit" {
+                println!("{} is a shell builtin", inputs.first().unwrap().trim());
+            }else  {
+                 println!("{}: command not found",inputs.first().unwrap().trim());
+            }
+            
+        }
+        else{
         println!("{}: command not found",input.trim()); 
         }
         
