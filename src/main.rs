@@ -27,7 +27,10 @@ fn main() {
                 println!("{} is a shell builtin", inputs.first().unwrap().trim()); 
             }else if inputs.first().unwrap() == &"exit" {
                 println!("{} is a shell builtin", inputs.first().unwrap().trim());
-            }else  {
+            }else if inputs.first().unwrap() == &"type" {
+                println!("{} is a shell builtin", inputs.first().unwrap().trim());
+            }
+            else  {
                  println!("{}: command not found",inputs.first().unwrap().trim());
             }
             
