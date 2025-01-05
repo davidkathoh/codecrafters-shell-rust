@@ -1,6 +1,6 @@
 #[allow(unused_imports)]
 use std::io::{self, Write};
-use std::{env, fs, path::Path};
+use std::{env, fs, path::Path,process::Command};
 
 
 fn main() {
@@ -47,6 +47,23 @@ fn main() {
                  println!("{}: not found",inputs.first().unwrap().trim());
             }
             
+        } else if inputs.first().unwrap() == &"program_1234"{
+            let path   =  env::var("PATH").unwrap();
+            let split = &mut path.split(":");
+        let cmd = inputs.first().unwrap().trim();
+        let arg = inputs[1];
+           
+        if let Some(dir) =  split.find(|dir| fs::metadata(format!("{}/{}",dir,cmd)).is_ok()){
+            let path =  format!("{}/{}", dir, cmd);
+            let output =    Command::new(path)
+            .arg(
+            arg
+            )
+            .spawn();
+
+        }
+           
+
         }
         else{
         println!("{}: command not found",input.trim()); 
