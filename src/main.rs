@@ -35,11 +35,18 @@ fn main() {
                 let path   =  env::var("PATH").unwrap();
                 for directory in  path.split(":") {
 
-                    let full_path = Path::new(directory).parent().unwrap().join(inputs.first().unwrap().trim());
-                    if full_path.is_dir() {
-                        println!("{} is {}",inputs.first().unwrap().trim(),full_path.to_str().unwrap());
+                   
+                    if Path::new(directory).ends_with(inputs.first().unwrap().trim()) {
+                        println!("{} is {}",inputs.first().unwrap().trim(),directory);
                         break;
                     }
+                  
+                  
+                    // let full_path = Path::new(directory).parent().unwrap().join(inputs.first().unwrap().trim());
+                    // if full_path.is_dir() {
+                    //    
+                    //     break;
+                    // }
                    
                    // println!("{:?}", full_path)
                     //  let metadata = fs::metadata(&path);
