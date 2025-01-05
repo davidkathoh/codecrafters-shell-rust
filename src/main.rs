@@ -33,35 +33,15 @@ fn main() {
                 println!("{} is a shell builtin", inputs.first().unwrap().trim());
             }else if env::var("PATH").is_ok() {
                 let path   =  env::var("PATH").unwrap();
-                for directory in  path.split(":") {
 
-                   
-                    if Path::new(directory).ends_with(inputs.first().unwrap().trim()) {
-                        println!("{} is {}",inputs.first().unwrap().trim(),directory);
-                        break;
-                    }
-                  
-                  
-                    // let full_path = Path::new(directory).parent().unwrap().join(inputs.first().unwrap().trim());
-                    // if full_path.is_dir() {
-                    //    
-                    //     break;
-                    // }
-                   
-                   // println!("{:?}", full_path)
-                    //  let metadata = fs::metadata(&path);
-
-                    //  match metadata {
-                    //     Ok(rs) => println!("{:?}",rs.),
-                    //     Err(err) => todo!(),
-                    //                      }
-                    // if inputs.first().unwrap() == &"ls" && "/usr/bin/ls" == directory  {
-                    //     println!("{} is /usr/bin/ls",inputs.first().unwrap().trim());
-                    // } else if inputs.first().unwrap() == &"valid_command" && "/usr/local/bin/valid_command" == directory {
-                    //     println!("{} is /usr/local/bin/valid_command",inputs.first().unwrap().trim());
-                    // }
+                let split = &mut path.split(":");
+                let cmd = inputs.first().unwrap().trim();
+                if let Some(dir) =  split.find(|dir| fs::metadata(format!("{}/{}",dir,cmd)).is_ok()){
+                    println!("{cmd} is {dir}/{cmd}")
+                }else {
+                    println!("{cmd}: not found"); 
                 }
-                println!("{}: not found",inputs.first().unwrap().trim()); 
+               
             }
             else  {
                  println!("{}: not found",inputs.first().unwrap().trim());
