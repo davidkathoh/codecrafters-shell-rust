@@ -1,6 +1,6 @@
 #[allow(unused_imports)]
 use std::io::{self, Write};
-use std::env;
+use std::{env, fs, path::Path};
 
 
 fn main() {
@@ -31,14 +31,32 @@ fn main() {
                 println!("{} is a shell builtin", inputs.first().unwrap().trim());
             }else if inputs.first().unwrap() == &"type" {
                 println!("{} is a shell builtin", inputs.first().unwrap().trim());
-            }else if env::var("PATH").is_ok() && inputs.first().unwrap() == &"ls" ||  inputs.first().unwrap() == &"valid_command" {
+            }else if env::var("PATH").is_ok() {
                 let path   =  env::var("PATH").unwrap();
                 for directory in  path.split(":") {
-                    if inputs.first().unwrap() == &"ls" && "/usr/bin/ls" == directory  {
-                        println!("{} is /usr/bin/ls",inputs.first().unwrap().trim());
-                    } else if inputs.first().unwrap() == &"valid_command" && "/usr/local/bin/valid_command" == directory {
-                        println!("{} is /usr/local/bin/valid_command",inputs.first().unwrap().trim());
+
+                    let full_path = Path::new(directory).parent().unwrap().join(inputs.first().unwrap().trim());
+
+                    if full_path.is_dir() {
+                        println!("{} is {}",inputs.first().unwrap().trim(),full_path.to_str().unwrap());
+                        break;
                     }
+                    else {
+                        println!("{}: not found",inputs.first().unwrap().trim());
+                        break;
+                    }
+                   // println!("{:?}", full_path)
+                    //  let metadata = fs::metadata(&path);
+
+                    //  match metadata {
+                    //     Ok(rs) => println!("{:?}",rs.),
+                    //     Err(err) => todo!(),
+                    //                      }
+                    // if inputs.first().unwrap() == &"ls" && "/usr/bin/ls" == directory  {
+                    //     println!("{} is /usr/bin/ls",inputs.first().unwrap().trim());
+                    // } else if inputs.first().unwrap() == &"valid_command" && "/usr/local/bin/valid_command" == directory {
+                    //     println!("{} is /usr/local/bin/valid_command",inputs.first().unwrap().trim());
+                    // }
                 } 
             }
             else  {
