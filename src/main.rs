@@ -35,17 +35,12 @@ fn main() {
                 let path   =  env::var("PATH").unwrap();
                 for directory in  path.split(":") {
 
-                   
                     let full_path = Path::new(directory).parent().unwrap().join(inputs.first().unwrap().trim());
-                    println!("{:?}", full_path.as_path());
                     if full_path.is_dir() {
                         println!("{} is {}",inputs.first().unwrap().trim(),full_path.to_str().unwrap());
                         break;
                     }
-                    else {
-                        println!("{}: not found",inputs.first().unwrap().trim());
-                        break;
-                    }
+                   
                    // println!("{:?}", full_path)
                     //  let metadata = fs::metadata(&path);
 
@@ -58,7 +53,8 @@ fn main() {
                     // } else if inputs.first().unwrap() == &"valid_command" && "/usr/local/bin/valid_command" == directory {
                     //     println!("{} is /usr/local/bin/valid_command",inputs.first().unwrap().trim());
                     // }
-                } 
+                }
+                println!("{}: not found",inputs.first().unwrap().trim()); 
             }
             else  {
                  println!("{}: not found",inputs.first().unwrap().trim());
