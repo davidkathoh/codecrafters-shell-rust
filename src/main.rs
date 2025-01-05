@@ -47,7 +47,7 @@ fn main() {
                  println!("{}: not found",inputs.first().unwrap().trim());
             }
             
-        } else if inputs.first().unwrap() == &"program_1234"{
+        } else if env::var("PATH").is_ok(){
             let path   =  env::var("PATH").unwrap();
             let split = &mut path.split(":");
         let cmd = inputs.first().unwrap().trim();
