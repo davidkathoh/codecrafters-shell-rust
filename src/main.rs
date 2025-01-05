@@ -51,9 +51,11 @@ fn main() {
             let path   =  env::var("PATH").unwrap();
             let split = &mut path.split(":");
         let cmd = inputs.first().unwrap().trim();
-        let arg = inputs[1];
-           
+       
+        
+       
         if let Some(dir) =  split.find(|dir| fs::metadata(format!("{}/{}",dir,cmd)).is_ok()){
+            let arg = inputs[1];
             let path =  format!("{}/{}", dir, cmd);
             let output =    Command::new(path)
             .arg(
@@ -61,6 +63,8 @@ fn main() {
             )
             .spawn();
 
+        }else{
+            println!("{}: not found",cmd);
         }
            
 
