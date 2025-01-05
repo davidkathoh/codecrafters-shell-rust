@@ -35,9 +35,9 @@ fn main() {
                 let path   =  env::var("PATH").unwrap();
                 for directory in  path.split(":") {
 
-                    println!("{}", directory);
+                   
                     let full_path = Path::new(directory).parent().unwrap().join(inputs.first().unwrap().trim());
-
+                    println!("{:?}", full_path.as_path());
                     if full_path.is_dir() {
                         println!("{} is {}",inputs.first().unwrap().trim(),full_path.to_str().unwrap());
                         break;
