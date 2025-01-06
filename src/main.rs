@@ -62,7 +62,6 @@ fn main() {
             let split = &mut path.split(":");
         let cmd = inputs.first().unwrap().trim();
        
-        
         if let Some(dir) =  split.find(|dir| fs::metadata(format!("{}/{}",dir,cmd)).is_ok()){
             let arg = inputs.get(1).unwrap_or(&"").trim();
             let path =  format!("{}/{}", dir, cmd);
