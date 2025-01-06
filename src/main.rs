@@ -45,7 +45,9 @@ fn main() {
                  println!("{}: not found",inputs.first().unwrap().trim());
             }
             
-        } else if env::var("PATH").is_ok(){
+        } else if inputs.first().unwrap() == &"pwd" {
+            println!("{}",env::current_dir().unwrap().display())
+        }else if env::var("PATH").is_ok(){
             let path   =  env::var("PATH").unwrap();
             let split = &mut path.split(":");
         let cmd = inputs.first().unwrap().trim();
@@ -66,8 +68,6 @@ fn main() {
         }
            
 
-        }else if inputs.first().unwrap() == &"pwd" {
-            println!("{}",env::current_dir().unwrap().display())
         }
         else{
         println!("{}: command not found",input.trim()); 
