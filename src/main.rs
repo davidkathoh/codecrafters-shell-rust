@@ -45,9 +45,15 @@ fn main() {
                  println!("{}: not found",inputs.first().unwrap().trim());
             }
             
-        } else if inputs.first().unwrap() == &"pwd" {
+        } else if cmd_1 == &"pwd" {
             println!("{}",env::current_dir().unwrap().display())
-        }else if env::var("PATH").is_ok(){
+        }else if cmd_1 == &"cd"  {
+            match env::set_current_dir(Path::new(inputs.get(1).unwrap_or(&""))) {
+                Ok(_) => continue,
+                Err(_) => println!("{}: {}:No such file or directory",cmd_1,inputs.get(1).unwrap_or(&"")),
+            }
+        }
+        else if env::var("PATH").is_ok(){
             let path   =  env::var("PATH").unwrap();
             let split = &mut path.split(":");
         let cmd = inputs.first().unwrap().trim();
