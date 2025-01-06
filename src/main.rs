@@ -8,6 +8,7 @@ fn main() {
     
 
     // Wait for user input
+    let commands = ["echo","exit","type","pwd"];
     loop {
         print!("$ ");
         io::stdout().flush().unwrap();
@@ -18,19 +19,16 @@ fn main() {
         let mut inputs:Vec<&str> = input.split(' ')
                 .map(|s|s.trim_end())
                 .collect();
+        let cmd_1 = inputs.first().unwrap();   
         if input.trim() == "exit 0" {
             break;
-        }else if inputs.first().unwrap() == &"echo"{
+        }else if cmd_1 == &"echo"{
              inputs.remove(0);
              println!("{}",inputs.join(" ").trim());   
-        }else if inputs.first().unwrap() == &"type" {
+        }else if cmd_1 == &"type" {
             inputs.remove(0);
-            if inputs.first().unwrap() == &"echo" {
+            if commands.contains(inputs.first().unwrap()) {
                 println!("{} is a shell builtin", inputs.first().unwrap().trim()); 
-            }else if inputs.first().unwrap() == &"exit" {
-                println!("{} is a shell builtin", inputs.first().unwrap().trim());
-            }else if inputs.first().unwrap() == &"type" {
-                println!("{} is a shell builtin", inputs.first().unwrap().trim());
             }else if env::var("PATH").is_ok() {
                 let path   =  env::var("PATH").unwrap();
 
@@ -68,6 +66,8 @@ fn main() {
         }
            
 
+        }else if inputs.first().unwrap() == &"pwd" {
+            println!("{}",env::current_dir().unwrap().display())
         }
         else{
         println!("{}: command not found",input.trim()); 
