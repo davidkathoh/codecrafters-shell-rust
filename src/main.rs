@@ -48,8 +48,11 @@ fn main() {
         } else if cmd_1 == &"pwd" {
             println!("{}",env::current_dir().unwrap().display())
         }else if cmd_1 == &"cd"  {
-            
-            match env::set_current_dir(Path::new(inputs.get(1).unwrap_or(&""))) {
+            let mut path = inputs.get(1).unwrap_or(&"").trim().to_string();
+            if path =="~" {
+                path = env::var("HOME").unwrap();
+            }
+            match env::set_current_dir(path) {
                 Ok(_) => continue,
                 Err(_) => println!("{}: {}: No such file or directory",cmd_1,inputs.get(1).unwrap_or(&"")),
             }
