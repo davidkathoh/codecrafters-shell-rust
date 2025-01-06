@@ -53,7 +53,7 @@ fn main() {
         
        
         if let Some(dir) =  split.find(|dir| fs::metadata(format!("{}/{}",dir,cmd)).is_ok()){
-            let arg = inputs[1];
+            let arg = inputs.get(0).unwrap_or(&"");
             let path =  format!("{}/{}", dir, cmd);
             let output =    Command::new(path)
             .arg(
