@@ -50,7 +50,7 @@ fn main() {
         }else if cmd_1 == &"cd"  {
             match env::set_current_dir(Path::new(inputs.get(1).unwrap_or(&""))) {
                 Ok(_) => continue,
-                Err(_) => println!("{}: {}:No such file or directory",cmd_1,inputs.get(1).unwrap_or(&"")),
+                Err(_) => println!("{}: {}: No such file or directory",cmd_1,inputs.get(1).unwrap_or(&"")),
             }
         }
         else if env::var("PATH").is_ok(){
