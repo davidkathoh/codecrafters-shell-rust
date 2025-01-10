@@ -25,8 +25,12 @@ fn main() {
             "echo"=>{
                 inputs.remove(0);
 
-                let e:Vec<String> = inputs.iter().map(|s|s.replace("'", "")).collect();
-                println!("{}",e.join(" "))//.join(" ").trim());  
+                let e:Vec<String> = inputs.iter().map(|s|if is_enclosed(s) {
+                    s.replace("'", "")}else{
+                        s.to_string()
+                    }).collect()  ;
+                
+                println!("{}",e.join(" ").trim())//.join(" ").trim());  
             }
             "exit"=>{
                 if inputs.get(1).unwrap() ==&"0" {
@@ -91,5 +95,8 @@ fn main() {
         
     }
 }
-   
+
+fn is_enclosed(text:&str)-> bool{
+    text.starts_with('\'') && text.ends_with('\'')
+}
 
