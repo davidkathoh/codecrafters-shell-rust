@@ -26,7 +26,7 @@ fn main() {
                 inputs.remove(0);
 
                 let e:Vec<String> = inputs.iter().map(|s|s.replace("'", "")).collect();
-                println!("{}",e.join(" ").trim())//.join(" ").trim());  
+                println!("{}",e.join(" "))//.join(" ").trim());  
             }
             "exit"=>{
                 if inputs.get(1).unwrap() ==&"0" {
