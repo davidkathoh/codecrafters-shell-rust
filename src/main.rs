@@ -8,7 +8,7 @@ fn main() {
     
 
     // Wait for user input
-    let commands = ["echo","exit","type","pwd"];
+    let   commands = ["echo","exit","type","pwd"];
     loop {
         print!("$ ");
         io::stdout().flush().unwrap();
@@ -19,35 +19,41 @@ fn main() {
         let mut inputs:Vec<&str> = input.split(' ')
                 .map(|s|s.trim_end())
                 .collect();
-        let cmd_1 = inputs.first().unwrap();   
-        if input.trim() == "exit 0" {
-            break;
-        }else if cmd_1 == &"echo"{
-             inputs.remove(0);
-             println!("{}",inputs.join(" ").trim());   
-        }else if cmd_1 == &"type" {
-            inputs.remove(0);
-            if commands.contains(inputs.first().unwrap()) {
-                println!("{} is a shell builtin", inputs.first().unwrap().trim()); 
-            }else if env::var("PATH").is_ok() {
-                let path   =  env::var("PATH").unwrap();
+        let cmd_1 = inputs.first().unwrap().trim();   
 
-                let split = &mut path.split(":");
-                let cmd = inputs.first().unwrap().trim();
-                if let Some(dir) =  split.find(|dir| fs::metadata(format!("{}/{}",dir,cmd)).is_ok()){
-                    println!("{cmd} is {dir}/{cmd}")
-                }else {
-                    println!("{cmd}: not found"); 
+        match cmd_1 {
+            "echo"=>{
+                inputs.remove(0);
+                println!("{}",inputs.join(" ").trim());  
+            }
+            "exit"=>{
+                if inputs.get(1).unwrap() ==&"0" {
+                    break;
                 }
-               
             }
-            else  {
-                 println!("{}: not found",inputs.first().unwrap().trim());
+            "type"=>{
+                if commands.contains(inputs.get(1).unwrap()) {
+                    println!("{} is a shell builtin", inputs.get(1).unwrap().trim()); 
+                }else if env::var("PATH").is_ok() {
+                    let path   =  env::var("PATH").unwrap();
+    
+                    let split = &mut path.split(":");
+                    let cmd = inputs.first().unwrap().trim();
+                    if let Some(dir) =  split.find(|dir| fs::metadata(format!("{}/{}",dir,cmd)).is_ok()){
+                        println!("{cmd} is {dir}/{cmd}")
+                    }else {
+                        println!("{cmd}: not found"); 
+                    }
+            }else{
+                println!("{}: not found",inputs.get(1).unwrap().trim());
             }
-            
-        } else if cmd_1 == &"pwd" {
-            println!("{}",env::current_dir().unwrap().display())
-        }else if cmd_1 == &"cd"  {
+        
+        }
+            "pwd"=>{
+                println!("{}",env::current_dir().unwrap().display())
+            }
+            "cd"=>{
+
             let mut path = inputs.get(1).unwrap_or(&"").trim().to_string();
             if path =="~" {
                 path = env::var("HOME").unwrap();
@@ -56,31 +62,32 @@ fn main() {
                 Ok(_) => continue,
                 Err(_) => println!("{}: {}: No such file or directory",cmd_1,inputs.get(1).unwrap_or(&"")),
             }
+            }
+            _=>{
+                if env::var("PATH").is_ok(){
+                    let path   =  env::var("PATH").unwrap();
+                    let split = &mut path.split(":");
+                let cmd = inputs.first().unwrap().trim();
+               
+                if let Some(dir) =  split.find(|dir| fs::metadata(format!("{}/{}",dir,cmd)).is_ok()){
+                    let arg = inputs.get(1).unwrap_or(&"").trim();
+                    let path =  format!("{}/{}", dir, cmd);
+                    let output =    Command::new(path)
+                    .arg(
+                    arg
+                    )
+                    .spawn();
+        
+                }
+                }else{
+                println!("{}: command not found",input.trim()); 
+                }
+            }
+            
         }
-        else if env::var("PATH").is_ok(){
-            let path   =  env::var("PATH").unwrap();
-            let split = &mut path.split(":");
-        let cmd = inputs.first().unwrap().trim();
-       
-        if let Some(dir) =  split.find(|dir| fs::metadata(format!("{}/{}",dir,cmd)).is_ok()){
-            let arg = inputs.get(1).unwrap_or(&"").trim();
-            let path =  format!("{}/{}", dir, cmd);
-            let output =    Command::new(path)
-            .arg(
-            arg
-            )
-            .spawn();
-
-        }else{
-            println!("{}: not found",cmd);
-        }
-           
-
-        }
-        else{
-        println!("{}: command not found",input.trim()); 
-        }
+         
         
     }
-   
 }
+   
+
