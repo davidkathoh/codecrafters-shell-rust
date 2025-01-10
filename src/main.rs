@@ -24,7 +24,9 @@ fn main() {
         match cmd_1 {
             "echo"=>{
                 inputs.remove(0);
-                println!("{}",inputs.join(" ").trim());  
+
+                let e:Vec<String> = inputs.iter().map(|s|s.replace("'", "")).collect();
+                println!("{}",e.join(" ").trim())//.join(" ").trim());  
             }
             "exit"=>{
                 if inputs.get(1).unwrap() ==&"0" {
