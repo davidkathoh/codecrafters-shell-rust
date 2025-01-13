@@ -29,9 +29,9 @@ fn main() {
               
              if is_enclosed(x.1){
                 let y = x.1.replace("'", "");
-                print!("{}",y)
+                println!("{}",y.trim())
              }else{
-                print!("{}",inputs.join(" ").trim())//.join(" ").trim());  
+                println!("{}",inputs.join(" ").trim())//.join(" ").trim());  
              }
             }
             "exit"=>{
