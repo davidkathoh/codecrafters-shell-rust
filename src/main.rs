@@ -31,7 +31,10 @@ fn main() {
                 let y = x.1.replace("'", "");
                 println!("{}",y.trim())
              }else{
-                println!("{}",inputs.join(" ").trim())//.join(" ").trim());  
+                //let y = x.1.split(" ");
+                let z:Vec<String> = inputs.iter().filter(|s|!s.is_empty()).map(|s|s.to_string()).collect();
+              
+                println!("{}",z.join(" ").trim())//.join(" ").trim());  
              }
             }
             "exit"=>{
