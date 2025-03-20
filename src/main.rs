@@ -8,7 +8,7 @@ fn main() {
     
 
     // Wait for user input
-    let   commands = ["echo","exit","type","pwd"];
+    let   commands = ["echo","exit","type","pwd","cat"];
     loop {
         print!("$ ");
         io::stdout().flush().unwrap();
@@ -31,7 +31,7 @@ fn main() {
                 let y = x.1.replace("'", "");
                 println!("{}",y.trim())
              }else{
-                //let y = x.1.split(" ");
+                
                 let z:Vec<String> = inputs.iter().filter(|s|!s.is_empty()).map(|s|s.to_string()).collect();
               
                 println!("{}",z.join(" ").trim())//.join(" ").trim());  
@@ -73,6 +73,10 @@ fn main() {
                 Ok(_) => continue,
                 Err(_) => println!("{}: {}: No such file or directory",cmd_1,inputs.get(1).unwrap_or(&"")),
             }
+            }
+            "cat"=>{
+
+                println!("cat detected")
             }
             _=>{
                 if env::var("PATH").is_ok(){
