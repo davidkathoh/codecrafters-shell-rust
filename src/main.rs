@@ -95,7 +95,7 @@ fn main() {
         
                 }
                 }else{
-                println!("{}: command not found",input.trim()); 
+                println!("{}: command no found",input.trim()); 
                 }
             }
             
