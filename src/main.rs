@@ -82,8 +82,28 @@ fn main() {
                 
                 let ch = new_input.join(" ");
                
+               let mut results = Vec::new();
+               let mut inside_quotes = false;
+               let mut current = String::new();
+                for c in ch.chars(){
 
-                println!(" result: {:?}", ch);
+                        if c== '\'' {
+                            if inside_quotes {
+                                results.push(current.clone());
+                                current.clear();
+                            }
+                            inside_quotes  =! inside_quotes;
+                        }else if inside_quotes {
+                            current.push(c);
+                        }
+
+                }
+               
+               println!("{:?} ",results);
+               for t in results   {
+                   
+                   print!("{:?}", std::fs::read_to_string(t.replace(" ", "/")))
+               }
                 println!("cat detected")
             }
             _=>{
