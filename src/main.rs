@@ -3,6 +3,7 @@ use std::io::{self, Write};
 use std::{env, fs, path::Path,process::Command};
 
 
+
 fn main() {
     // Uncomment this block to pass the first stage
     
@@ -78,9 +79,10 @@ fn main() {
 
                 let mut  new_input = inputs;
                 new_input.remove(0);
-                new_input.join("");
+                
+               
 
-                println!("{:?}", new_input);
+                println!("{:?}", new_input.join(" "));
                 println!("cat detected")
             }
             _=>{
