@@ -76,6 +76,7 @@ fn main() {
             }
             "cat"=>{
 
+                println!("{:?}", inputs);
                 println!("cat detected")
             }
             _=>{
@@ -95,7 +96,7 @@ fn main() {
         
                 }
                 }else{
-                println!("{}: command no found",input.trim()); 
+                println!("{}: command not found",input.trim()); 
                 }
             }
             
