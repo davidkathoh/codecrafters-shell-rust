@@ -102,7 +102,8 @@ fn main() {
                println!("{:?} ",results);
                for t in results   {
                    
-                   print!("{:?}", std::fs::read_to_string(t.replace(" ", "/")))
+                   println!("path: {}",t.replace(" ", "/"));
+                   print!("{:?}", std::fs::read_to_string(t.replace(" ", "/")));
                }
                 println!("cat detected")
             }
