@@ -80,7 +80,7 @@ fn main() {
                 let mut  new_input = inputs;
                 new_input.remove(0);
                 
-                let ch = new_input.join("");
+                let ch = new_input.join(" ");
                
 
                 println!(" result: {:?}", ch);
