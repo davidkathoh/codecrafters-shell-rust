@@ -78,7 +78,7 @@ fn main() {
 
                 let mut  new_input = inputs;
                 new_input.remove(0);
-                new_input.join(" ");
+                new_input.join("");
 
                 println!("{:?}", new_input);
                 println!("cat detected")
