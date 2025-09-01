@@ -84,6 +84,7 @@ fn main() {
                
                let mut results = Vec::new();
                let mut inside_quotes = false;
+               let mut space = false;
                let mut current = String::new();
                 for c in ch.chars(){
 
@@ -94,7 +95,16 @@ fn main() {
                             }
                             inside_quotes  =! inside_quotes;
                         }else if inside_quotes {
-                            current.push(c);
+
+                            if c == ' ' && !space {
+                                current.push('/');
+                                space = true;
+                            }else if c == ' ' && space {
+                                continue;
+                            }else {
+                                 current.push(c);
+                            }
+                           
                         }
 
                 }
